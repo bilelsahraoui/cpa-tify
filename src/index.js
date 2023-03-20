@@ -7,6 +7,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Upload from './pages/Upload';
 import About from './pages/About';
 import Layout from './layout/default';
+import Search from './pages/Search';
+import Playlist from './pages/Playlist';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: "/upload",
         element: <Upload />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
+      },
+      {
+        path: "/playlist",
+        element: <Playlist />
       }
     ]
   },

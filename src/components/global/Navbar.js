@@ -12,6 +12,12 @@ const Navbar = () => {
                 <LinkTxt to="/">
                     <h3>Home</h3>
                 </LinkTxt>
+                <LinkTxt to="/search">
+                    <h3>Search</h3>
+                </LinkTxt>
+                <LinkTxt to="/playlist">
+                    <h3>Playlists</h3>
+                </LinkTxt>
                 <LinkTxt to="/upload">
                     <h3>Upload a music</h3>
                 </LinkTxt>
@@ -27,11 +33,9 @@ const StyledNavbar = styled.div`
     background-color: lightgray;
     color: #fff;
     height: 100vh;
-    width: 15vw;
-    position: relative;
-    background: white;
-    margin-right: 2rem;
-    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    width: 20vw;
+    background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, .94));
+    border-right: 1px solid rgba(0, 0, 0, .3);
 `;
 
 const DivTitle = styled.div`
@@ -40,7 +44,6 @@ const DivTitle = styled.div`
     align-items: center;
     height: 15vh;
     width: 100%;
-    position: relative;
 `;
 
 const StyledTitle = styled.h1`
@@ -50,6 +53,8 @@ const StyledTitle = styled.h1`
     padding: 0;
     position: relative;
     text-align: center;
+    color: #FFF;
+    font-family: 'Courier New', Courier, monospace
 `;
 
 const DivLink = styled.div`
@@ -71,10 +76,10 @@ const LinkTxt = styled(Link)`
     position: relative;
     font-style: normal;
     text-decoration: none;
-    color: #000;
+    color: #FFF;
     text-align: center;
     :hover {
-        background-color: rgba(255, 255, 255, 0.4);
+        background-color: rgba(255, 255, 255, .1);
     }
 `;
 

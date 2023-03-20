@@ -7,16 +7,16 @@ process.once("loaded", () => {
     open: () => {
       ipcRenderer.send('open-file-dialog');
     },
-    uploadMusic: () => {
+    uploadMusic: (setFile, setUploaded) => {
       ipcRenderer.on('openDialog', (event, audioPath) => {
         if (audioPath){
           let normalPath = audioPath.replace(/\\/g, '/');
           let slashIndex = normalPath.lastIndexOf('/');
           let name = normalPath.substring(slashIndex + 1);
-          console.log(name)
           fs.copyFile(normalPath, `src/musics/${name}`, (err) => {
             if (err) throw err;
             console.log(`${name} successfully uploaded!`);
+            setUploaded(true);
           });
         }
       })
@@ -36,8 +36,16 @@ process.once("loaded", () => {
   contextBridge.exposeInMainWorld("getMusics", {
     get: (setState) => {
       fs.readdir("src/musics", (err, files) => {
-      setState(files)
+      setState(files.reverse().slice(0, 10))
     });
     }
-  })
+  });
+  contextBridge.exposeInMainWorld("searchMusics", {
+    findMusic: (setState, search) => {
+      fs.readdir("src/musics", (err, files) => {
+        let searchLower = search.toLowerCase();
+        setState(files.filter((file) => file.toLowerCase().includes(searchLower)));
+      });
+    }
+  });
 });

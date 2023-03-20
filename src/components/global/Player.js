@@ -28,10 +28,12 @@ const PlayerCenter = styled.div`
     width: 100%;
 `;
 const PlayerWrapper = styled.div`
+    position: fixed;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     bottom: 0;
+    left: 50%;
+    right: 50%;
     width: 100%;
 `;
 

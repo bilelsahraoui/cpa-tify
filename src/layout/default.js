@@ -8,28 +8,31 @@ const Layout = () => {
     const [music, setMusic] = useState("");
 
     return (
-        <LayoutWrapper>
-            <PageWrapper>
+        <>
+            <Player music={() => music} />
+            <LayoutWrapper>
                 <Navbar />
-                <Outlet context={[music, setMusic]} />
-                <Player music={() => music} />
-            </PageWrapper>
-        </LayoutWrapper>
+                <PageWrapper>
+                    <Outlet context={[music, setMusic]} />
+                </PageWrapper>
+            </LayoutWrapper>
+        </>
     )
 }
 
 const LayoutWrapper = styled.div`
     max-height: 100vh;
     overflow-y: hidden;
-    position: absolute;
-    background: linear-gradient(to right top, #65dfc9, #6cdbeb);
     display: flex;
+    height: 100vh;
+    width: 100vw;
 `;
 const PageWrapper = styled.div`
     display: flex;
     justify-content: left;
     height: 100vh;
     width: 100vw;
+    background: rgba(0, 0, 0, 0.90);
 `;
 
 export default Layout;
