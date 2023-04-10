@@ -12,3 +12,8 @@ Il sera possible d'upload des musiques et de composer des playlists afin de les 
 - Un système de playlist 
 - Ecouter une musique ou des playlists
 - Rechercher des musiques
+
+
+Vidéo démo : https://youtu.be/1QMkaFjleig
+
+Sahraoui Bilel
