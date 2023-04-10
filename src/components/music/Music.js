@@ -1,16 +1,22 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import AddToPlaylist from "../playlist/AddToPlaylist";
 
 const Music = ({music, songTitle}) => {
     const { play, clean } = window.playMusic;
     const [file, setFile] = useState("");
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const playMusic = (path) => {
+        music.setMusic([file])
         play(setFile, path);
-        music.setMusic(file)
     }
+
+    useEffect(() => {
+        music.setMusic([file])
+    }, [file])
 
     useEffect(() => {
         return () => {
@@ -19,10 +25,12 @@ const Music = ({music, songTitle}) => {
     }, [clean]);
 
     useEffect(() => {
-        if(music.music.replace("safe-file://./src/musics/", "") == songTitle){
-            setIsPlaying(true);
-        }else{
-            setIsPlaying(false);
+        if(music.music.length > 0){
+            if(music.music[0].replace("safe-file://./src/musics/", "") == songTitle){
+                setIsPlaying(true);
+            }else{
+                setIsPlaying(false);
+            }
         }
     }, [music]);
 
@@ -53,7 +61,23 @@ const Music = ({music, songTitle}) => {
                     </MusicTitle>
                 </TitleDiv>
                 <AddPlaylistDiv>
-                    <AddPlaylistButton onClick={() => alert('Pas encore implémenté')}>+</AddPlaylistButton>
+                    <AddPlaylistAction>
+                        {
+                            isOpen ?
+                            <>
+                                <ControllerPlaylist onClick={() => setIsOpen(!isOpen)}>
+                                    -
+                                </ControllerPlaylist>
+                                <AddToPlaylist songTitle={songTitle} playlistName={"ok"} setIsOpen={setIsOpen} />
+                            </>
+                            :
+                            <>
+                                <ControllerPlaylist onClick={() => setIsOpen(true)}>
+                                    +
+                                </ControllerPlaylist>
+                            </>
+                        }
+                    </AddPlaylistAction>
                 </AddPlaylistDiv>
             </MusicContainer>
         </MusicWrapper>
@@ -110,8 +134,13 @@ const PlayButton = styled.span`
     cursor: pointer;
 `;
 
-const AddPlaylistButton = styled.span`
-    font-size: 2rem;
+const AddPlaylistAction = styled.div`
+    position: relative;
+    font-size: 1.5rem;
+    cursor: pointer;
+`;
+
+const ControllerPlaylist = styled.span`
     cursor: pointer;
 `;
 

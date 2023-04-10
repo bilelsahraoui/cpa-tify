@@ -3,17 +3,41 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const Player = ({music}) => {
+
+    const [playlist, setPlaylist] = useState([]);
+
+    const [currentMusic, setCurrentMusic] = useState(0);
     const [file, setFile] = useState("");
 
     useEffect(() => {
-        console.log(file);
-        setFile(music)
-    }, [file, music]);
+        setFile(playlist[currentMusic])
+    }, [playlist, music, currentMusic])
+
+    useEffect(() => {
+        setCurrentMusic(0)
+        setPlaylist(music[0])
+    }, [music])
+
+    useEffect(() => {
+        setCurrentMusic(0)
+    }, [playlist])
+
+    useEffect(() => {
+        setFile(music[0][currentMusic])
+    }, [music])
+
+    useEffect(() => {
+        const audio = document.getElementById("audio");
+        audio.addEventListener("ended", () => {
+            setCurrentMusic(currentMusic + 1);
+            setFile(music.music[currentMusic + 1]);
+        });
+    }, [currentMusic]);
 
     return (
         <PlayerWrapper>
             <PlayerCenter>
-                <audio controls autoPlay src={file}>
+                <audio id="audio" controls autoPlay src={file}>
                     <source src={file} type="audio/mpeg" />
                     Your browser does not support the audio element.
                 </audio>

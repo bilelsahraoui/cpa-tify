@@ -9,6 +9,8 @@ import About from './pages/About';
 import Layout from './layout/default';
 import Search from './pages/Search';
 import Playlist from './pages/Playlist';
+import PlaylistMusic from './pages/Playlist/PlaylistMusic';
+import CreatePlaylist from './pages/Playlist/CreatePlaylist';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
       {
         path: "/playlist",
         element: <Playlist />
+      },
+      {
+        path: "/playlist/:playlistName",
+        element: <PlaylistMusic />,
+      },
+      {
+        path: "/playlist/create",
+        element: <CreatePlaylist />,
       }
     ]
   },

@@ -48,4 +48,49 @@ process.once("loaded", () => {
       });
     }
   });
+  contextBridge.exposeInMainWorld("getPlaylists", {
+    get: (setState) => {
+      fs.readdir("src/playlists", (err, files) => {
+        setState(files.reverse())
+      });
+    },
+    musics: (setState, playlist) => {
+      fs.readdir(`src/playlists/${playlist}`, (err, files) => {
+        let safeFiles = files.map((file) => `safe-file://./src/playlists/${playlist}/${file}`);
+        setState(safeFiles)
+      });
+    },
+    clean: () => {
+      ipcRenderer.removeAllListeners('getPlaylists');
+    }
+  });
+  contextBridge.exposeInMainWorld("Playlist", {
+    create: (playlistName) => {
+      fs.mkdir(`src/playlists/${playlistName}`, (err) => {
+        if (err) throw err;
+        console.log(`${playlistName} successfully created!`);
+      });
+    },
+    erase: (playlistName) => {
+      fs.rmdir(`src/playlists/${playlistName}`, { recursive: true }, (err) => {
+        if (err) throw err;
+        console.log(`${playlistName} successfully deleted!`);
+      });
+    },
+    addMusic: (playlistName, musicName) => {
+      fs.copyFile(`src/musics/${musicName}`, `src/playlists/${playlistName}/${musicName}`, (err) => {
+        if (err) throw err;
+        console.log(`${musicName} successfully added to ${playlistName}!`);
+      });
+    },
+    deleteMusic: (playlistName, musicName) => {
+      fs.rm(`src/playlists/${playlistName}/${musicName}`, (err) => {
+        if (err) throw err;
+        console.log(`${musicName} successfully deleted from ${playlistName}!`);
+      });
+    },
+    clean: () => {
+      ipcRenderer.removeAllListeners('Playlist');
+    },
+  });
 });

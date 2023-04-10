@@ -5,11 +5,11 @@ import Player from "../components/global/Player";
 import styled from "styled-components";
 
 const Layout = () => {
-    const [music, setMusic] = useState("");
+    const [music, setMusic] = useState([]);
 
     return (
         <>
-            <Player music={() => music} />
+            <Player music={[music, setMusic]} />
             <LayoutWrapper>
                 <Navbar />
                 <PageWrapper>
